@@ -1,5 +1,6 @@
 //importo React & gli HOOKS useState, useEffect
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import New from "../new/new.component";
 import "./counter.styles.scss";
 
 //creo il componente che estende il componente base dalla libreria React
@@ -31,6 +32,15 @@ import "./counter.styles.scss";
 //   }
 
 const Counter = () => {
+
+
+  //dichiaro una varaibile per la useCallback
+  const getVal = useCallback(() => {
+    for(let i = 0; i < 1000000000; i++){ }
+
+    return [1, 2, 3, 4, 5]
+  }, [])
+
   //creo un variabile che restituisce un array (destrutturazione) per modificare lo state, in base al suo valore di partenza da noi impostato: setState(0)
   const [count, setCount] = useState(0);
 
@@ -72,6 +82,10 @@ const Counter = () => {
 
   return (
     <div className="counter">
+
+      {/* importo il NewComponent e dichiaro che la props getValues deve corrispondere a getVal*/}
+      <New getValues={getVal} />
+
       {/* rendo condizionale la classe */}
       <div className={`number_counter ${count >= 5 ? "red" : null}`}>
         {/* aggiungo la proprietà dello state */}
