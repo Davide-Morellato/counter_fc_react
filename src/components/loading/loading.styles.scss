@@ -1,0 +1,26 @@
+.loading{
+    display: inline-block;
+}
+
+.loading:after{
+    content: ' ';
+    display: block;
+    width: 65px;
+    height: 65px;
+    aspect-ratio: 1/1;
+    margin: 8px;
+    border-radius: 50%;
+    border: 5px solid white;
+    border-color: white transparent white transparent;
+    animation: loading 1.2s linear infinite;
+}
+
+@keyframes loading {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}

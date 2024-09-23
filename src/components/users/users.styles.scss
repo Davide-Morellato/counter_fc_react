@@ -1,0 +1,22 @@
+.users{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    gap: 20px;
+
+    .single_user{
+        background-color: blanchedalmond;
+        color: rgb(53, 119, 121);
+        padding: 5px;
+        height: 40px;
+        margin-bottom: 10px;
+        border: 1px solid white;
+        border-radius: 5px;
+    }
+
+    span{
+        display: block;
+    }
+}

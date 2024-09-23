@@ -1,0 +1,37 @@
+.counter {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  
+  .number_counter {
+    font-size: 40px;
+    color: rgb(207, 181, 181);
+    font-weight: bold;
+  }
+
+  .red{
+    color: rgb(72, 26, 26);
+  }
+
+  .wrapper_buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 10px;
+    gap: 20px;
+  }
+
+  .button_counter {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+
+    &:active {
+      background-color: rgb(127, 199, 233);
+      color: white;
+    }
+  }
+}
