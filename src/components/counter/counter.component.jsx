@@ -1,5 +1,5 @@
 //importo React & gli HOOKS useState, useEffect
-import React, { useState, useEffect, useCallback, useLayoutEffect, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import New from "../new/new.component";
 import "./counter.styles.scss";
 
@@ -54,7 +54,7 @@ const Counter = () => {
   // }, [])
 
   //dihiaro una variabile che invochi la funzione getVal()
-  const passValues = useMemo (() => getVal(), [])
+  // const passValues = useMemo (() => getVal(), [])
 
   //creo un variabile che restituisce un array (destrutturazione) per modificare lo state, in base al suo valore di partenza da noi impostato: setState(0)
   const [count, setCount] = useState(0);
@@ -110,16 +110,27 @@ const Counter = () => {
   // })
 
   //dichiaro la funzione useLayoutEffect() -> interviene prima che la pagina venga aggiornata
-  useLayoutEffect(() => {
-    console.log('Pre-Aggiornamento: ' + count)
-  }, [count])
+  // useLayoutEffect(() => {
+  //   console.log('Pre-Aggiornamento: ' + count)
+  // }, [count])
+
+
+  //dichiro una variabile per l'assegnazione di useRef al bottone Increase, assegnandogli come valore di default "null"
+  const inputEl = useRef(null)
+
+  //dichiaro lo useEffect per descrivere cosa deve fare la variabile inputEl
+  //current -> metodo che consente di leggere lo stato attuale dell'elemento
+  //focus() -> funzione Js per impostare il focus su un elemento
+  useEffect(() => {
+    inputEl.current.focus();
+  })
 
 
   return (
     <div className="counter">
 
       {/* importo il NewComponent e dichiaro che la props getValues deve corrispondere a passValue per leggere i valori ottenuti da getVal*/}
-      <New getValues={passValues} />
+      {/* <New getValues={passValues} /> */}
 
       {/* rendo condizionale la classe */}
       <div className={`number_counter ${count >= 5 ? "red" : null}`}>
@@ -146,8 +157,10 @@ const Counter = () => {
         </button>
 
         {/* aggiungo l'evento onClick per incrementare il valore di number */}
+        {/* aggiungo il ref che invoca l'HOOK useRef */}
         <button
           type="submit"
+          ref={inputEl}
           onClick={IncreaseNumber}
           className="button_counter"
         >

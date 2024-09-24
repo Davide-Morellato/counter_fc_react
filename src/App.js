@@ -3,7 +3,6 @@ import "./App.css";
 import Card from "./components/card/card.component"; //importo il componente Card
 import ErrorBoundaries from "./components/errorBoundaries/errorBoundaries.component"; //importo il componente Error
 
-
 function App() {
 
   return (
