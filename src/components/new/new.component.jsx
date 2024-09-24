@@ -5,17 +5,17 @@ import './new.styles.scss'
 const New = ({getValues}) => {
 
     //imposto uno state
-    const [val, setValues] = useState([]); //array di valori che si andranno a prendere da counter
+    // const [val, setValues] = useState([]); //array di valori che verranno presi da counter
 
-    useEffect(() => {
-        setValues(getValues());
-        console.log('aggiornato New')
-    }, [getValues]);
+    // useEffect(() => {
+    //     setValues(getValues());
+    //     console.log('aggiornato New')
+    // }, [getValues]);
 
     return(
         <div className="new">
             {
-            val.map((value) => (
+            getValues.map((value) => (
                 <span key={value}>
                     {value}
                 </span>

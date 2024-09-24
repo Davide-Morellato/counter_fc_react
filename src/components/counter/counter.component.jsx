@@ -1,5 +1,5 @@
 //importo React & gli HOOKS useState, useEffect
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useLayoutEffect, useMemo } from "react";
 import New from "../new/new.component";
 import "./counter.styles.scss";
 
@@ -9,37 +9,52 @@ import "./counter.styles.scss";
 //   constructor(props) {
 //     //metodo super per passare il parametro props al componente che sto estendendo: React.Component
 //     super(props);
-
+//
 //     //
 //     //MODO 1 -> invoco la funzione Increase per legarla all'evento onClick
 //     // this.IncreaseNumber = this.IncreaseNumber.bind(this)
-
+//
 //     //definisco lo stato come oggetto di Js, utilizzando this per accedere alle props
 //     this.state = {
 //       //dichiaro una proprietà iniziale
 //       // number: 0,
-
+//
 //       //dichiaro una proprietà come oggetto
 //       number: {
 //         value: 0,
 //         otherProperty: 'ciao'
 //       },
-
+//
 //       test: {
 //         othersProperty: 'hello'
 //       }
 //     };
 //   }
 
+
+//
+//
+//tenendo fuori questa funzione, verrà eseguita una sola volta e non ogni volta che refresho il componente
+const getVal = () => {
+  for(let i = 0; i < 1000000000; i++){ }
+
+  //constrollo in console quando viene invocata la funzione
+  console.log('getVal')
+
+  return [1, 2, 3, 4, 5]
+}
+
 const Counter = () => {
 
-
   //dichiaro una varaibile per la useCallback
-  const getVal = useCallback(() => {
-    for(let i = 0; i < 1000000000; i++){ }
+  // const getVal = useCallback(() => {
+  //   for(let i = 0; i < 1000000000; i++){ }
 
-    return [1, 2, 3, 4, 5]
-  }, [])
+  //   return [1, 2, 3, 4, 5]
+  // }, [])
+
+  //dihiaro una variabile che invochi la funzione getVal()
+  const passValues = useMemo (() => getVal(), [])
 
   //creo un variabile che restituisce un array (destrutturazione) per modificare lo state, in base al suo valore di partenza da noi impostato: setState(0)
   const [count, setCount] = useState(0);
@@ -75,16 +90,36 @@ const Counter = () => {
     borderRadius: "15px",
   };
 
-  //dichiaro la funzione useEffect, definendo in base a quale valore aggiornarsi ", [count]"
+  //dichiaro la funzione useEffect come fosse componentDidMount()
+  useEffect(() => {
+    console.log('Primo Render')
+  }, [])
+
+  //dichiaro la funzione useEffect, definendo in base a quale valore aggiornarsi ", [count]" -> componentDidUpdate()
   useEffect(() => {
     console.log('aggiornato: ' + count)
   }, [count])
 
+  //dichiaro la funzione useEffect, come fosse componentWillUnmount()
+  // useEffect(() => {
+
+  //   //restituisco una funzione callback
+  //   return () => {
+  //     console.log('SMONTATO')
+  //   }
+  // })
+
+  //dichiaro la funzione useLayoutEffect() -> interviene prima che la pagina venga aggiornata
+  useLayoutEffect(() => {
+    console.log('Pre-Aggiornamento: ' + count)
+  }, [count])
+
+
   return (
     <div className="counter">
 
-      {/* importo il NewComponent e dichiaro che la props getValues deve corrispondere a getVal*/}
-      <New getValues={getVal} />
+      {/* importo il NewComponent e dichiaro che la props getValues deve corrispondere a passValue per leggere i valori ottenuti da getVal*/}
+      <New getValues={passValues} />
 
       {/* rendo condizionale la classe */}
       <div className={`number_counter ${count >= 5 ? "red" : null}`}>
